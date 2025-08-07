@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ラッキーナンバー占い</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            transition: background-color 1s ease;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input, button {
+            margin: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+
+        #result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ラッキーナンバー占い</h1>
+        <p>あなたの名前と誕生日を入力してください</p>
+        <input type="text" id="name" placeholder="名前">
+        <input type="date" id="birthday">
+        <button id="generate">占う</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        const nameInput = document.getElementById('name');
+        const birthdayInput = document.getElementById('birthday');
+        const generateButton = document.getElementById('generate');
+        const resultDiv = document.getElementById('result');
+
+        generateButton.addEventListener('click', () => {
+            const name = nameInput.value;
+            const birthday = birthdayInput.value;
+
+            if (name && birthday) {
+                const seed = name + birthday;
+                let hash = 0;
+                for (let i = 0; i < seed.length; i++) {
+                    hash += seed.charCodeAt(i);
+                }
+                const luckyNumber = (hash % 100) + 1;
+
+                let message = '';
+                let color = '';
+
+                if (luckyNumber >= 1 && luckyNumber <= 20) {
+                    message = '素晴らしい幸運が訪れるでしょう！';
+                    color = 'gold';
+                } else if (luckyNumber >= 21 && luckyNumber <= 40) {
+                    message = '良い一日になりそうです。';
+                    color = 'lightgreen';
+                } else if (luckyNumber >= 41 && luckyNumber <= 60) {
+                    message = '落ち着いて行動すれば、物事は順調に進みます。';
+                    color = 'lightblue';
+                } else if (luckyNumber >= 61 && luckyNumber <= 80) {
+                    message = '少し注意が必要な日です。慎重に行動しましょう。';
+                    color = 'lightcoral';
+                } else {
+                    message = '新しい挑戦には最適な日です！';
+                    color = 'lightpink';
+                }
+
+                resultDiv.innerHTML = `
+                    <p>${name}さんの今日のラッキーナンバーは「${luckyNumber}」です！</p>
+                    <p>${message}</p>
+                `;
+                document.body.style.backgroundColor = color;
+            } else {
+                resultDiv.innerHTML = '<p>名前と誕生日を入力してください。</p>';
+            }
+        });
+    </script>
+</body>
+</html>

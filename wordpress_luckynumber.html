@@ -1,0 +1,74 @@
+<div class="container-luckynumber">
+    <h1>ラッキーナンバー占い</h1>
+    <p>あなたの名前と誕生日を入力してください</p>
+    <input type="text" id="name-luckynumber" placeholder="名前">
+    <input type="date" id="birthday-luckynumber">
+    <button id="generate-luckynumber">占う</button>
+    <div id="result-luckynumber"></div>
+</div>
+
+<style>
+    .container-luckynumber {
+        font-family: sans-serif;
+        text-align: center;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        max-width: 500px;
+    }
+
+    .container-luckynumber input, .container-luckynumber button {
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 80%;
+    }
+
+    .container-luckynumber button {
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        width: auto;
+        padding: 0.5rem 1.5rem;
+    }
+
+    #result-luckynumber {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+</style>
+
+<script>
+    const nameInput_ln = document.getElementById('name-luckynumber');
+    const birthdayInput_ln = document.getElementById('birthday-luckynumber');
+    const generateButton_ln = document.getElementById('generate-luckynumber');
+    const resultDiv_ln = document.getElementById('result-luckynumber');
+
+    generateButton_ln.addEventListener('click', () => {
+        const name = nameInput_ln.value;
+        const birthday = birthdayInput_ln.value;
+
+        if (name && birthday) {
+            const seed = name + birthday;
+            const luckyNumber = Math.floor(Math.random() * 100) + 1;
+            const messages = [
+                "今日は最高の1日になるでしょう！",
+                "新しいことに挑戦すると良い結果が待っています。",
+                "思わぬ幸運が舞い込んでくるかも？",
+                "周りの人に優しくすると、良いことがあります。",
+                "目標に向かって一歩踏み出す日。"
+            ];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+
+            resultDiv_ln.innerHTML = `
+                <p>${name}さんの今日のラッキーナンバーは「${luckyNumber}」です！</p>
+                <p>${message}</p>
+            `;
+        } else {
+            resultDiv_ln.innerHTML = "<p>名前と誕生日を入力してください。</p>";
+        }
+    });
+</script>

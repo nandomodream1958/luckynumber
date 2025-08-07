@@ -1,0 +1,99 @@
+<div class="container-luckynumber-final" id="lucky-number-container-final">
+    <h1>ラッキーナンバー占い</h1>
+    <p>あなたの名前と誕生日を入力してください</p>
+    <input type="text" id="name-luckynumber-final" placeholder="名前">
+    <input type="date" id="birthday-luckynumber-final">
+    <button id="generate-luckynumber-final">占う</button>
+    <div id="result-luckynumber-final"></div>
+</div>
+
+<style>
+    .container-luckynumber-final {
+        font-family: sans-serif;
+        text-align: center;
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        max-width: 500px;
+        transition: background-color 1s ease;
+    }
+
+    .container-luckynumber-final input, .container-luckynumber-final button {
+        margin: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 80%;
+    }
+
+    .container-luckynumber-final button {
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        width: auto;
+        padding: 0.5rem 1.5rem;
+    }
+
+    #result-luckynumber-final {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nameInput = document.getElementById('name-luckynumber-final');
+    const birthdayInput = document.getElementById('birthday-luckynumber-final');
+    const generateButton = document.getElementById('generate-luckynumber-final');
+    const resultDiv = document.getElementById('result-luckynumber-final');
+    const container = document.getElementById('lucky-number-container-final');
+
+    if (generateButton) {
+        generateButton.addEventListener('click', () => {
+            const name = nameInput.value;
+            const birthday = birthdayInput.value;
+
+            if (name && birthday) {
+                const seed = name + birthday;
+                let hash = 0;
+                for (let i = 0; i < seed.length; i++) {
+                    hash += seed.charCodeAt(i);
+                }
+                const luckyNumber = (hash % 100) + 1;
+
+                let message = '';
+                let color = '';
+
+                if (luckyNumber >= 1 && luckyNumber <= 20) {
+                    message = '素晴らしい幸運が訪れるでしょう！';
+                    color = 'gold';
+                } else if (luckyNumber >= 21 && luckyNumber <= 40) {
+                    message = '良い一日になりそうです。';
+                    color = 'lightgreen';
+                } else if (luckyNumber >= 41 && luckyNumber <= 60) {
+                    message = '落ち着いて行動すれば、物事は順調に進みます。';
+                    color = 'lightblue';
+                } else if (luckyNumber >= 61 && luckyNumber <= 80) {
+                    message = '少し注意が必要な日です。慎重に行動しましょう。';
+                    color = 'lightcoral';
+                } else {
+                    message = '新しい挑戦には最適な日です！';
+                    color = 'lightpink';
+                }
+
+                resultDiv.innerHTML = `
+                    <p>${name}さんの今日のラッキーナンバーは「${luckyNumber}」です！</p>
+                    <p>${message}</p>
+                `;
+                if (container) {
+                    container.style.backgroundColor = color;
+                }
+            } else {
+                resultDiv.innerHTML = "<p>名前と誕生日を入力してください。</p>";
+            }
+        });
+    }
+});
+</script>
